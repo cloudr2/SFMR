@@ -6,6 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     public float speed;
+    public float damage;
+    public  GameObject owner { get; set; }
     private Rigidbody rb;
 
     private void Awake() {
@@ -16,4 +18,13 @@ public class Bullet : MonoBehaviour {
     void Update() {
         rb.velocity = transform.forward * speed;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag != owner.tag)
+        {
+            other.transform.parent.SendMessage("ReceiveDamage",damage);
+        }
+    }
+
 }
