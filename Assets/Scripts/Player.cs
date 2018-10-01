@@ -33,11 +33,11 @@ public class Player : Ship {
             anim.Play("burst_inv");
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKey(KeyCode.E)) {
             BarrelRoll(-1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKey(KeyCode.Q)) {
             BarrelRoll(1);
         }
 
@@ -58,9 +58,7 @@ public class Player : Ship {
 
     //receives either -1 or 1 to asign orientation
     private void BarrelRoll (int orientation) {
-        Quaternion zRot = transform.rotation;
-        zRot.eulerAngles = Vector3.forward* 90.0f * orientation;
-        transform.rotation = zRot;
+        throw new System.NotImplementedException();
     }
 
     #region Shoot
