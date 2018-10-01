@@ -8,7 +8,7 @@ public abstract class Ship : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform shootingPoint, bulletHolder;
-    public float normalSpeed, burstSpeed, burstCD, ShootCD;
+    public float shipSpeed, burstCD, ShootCD;
 
     protected bool canShoot = true;
     protected Animator anim;

@@ -5,9 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
-    public GameObject ground;
-
-    private Player ship;
 
     private void Awake() {
         if (instance == null)
@@ -17,15 +14,4 @@ public class GameManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
     }
-
-    private void Start() {
-        ship = FindObjectOfType<Player>();
-    }
-
-    private void Update() {
-        if (Input.GetKey(KeyCode.R)) {
-            ship.transform.position = Vector3.zero;
-        }
-    }
-
 }

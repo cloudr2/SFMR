@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LifeScript : MonoBehaviour {
+public class LifeScript : MonoBehaviour{
 
     public float maxHP;
     private float currentHP;

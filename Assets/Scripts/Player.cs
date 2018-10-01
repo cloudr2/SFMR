@@ -6,52 +6,68 @@ using UnityEngine;
 public class Player : Ship {
 
     public GameObject splashPart;
+    public Transform aim;
 
-    private float currentSpeed, forwSpeed;
-
+    private float forwSpeed;
     private bool canBurst = true;
+    private float offsetDir;
 
     protected override void Awake() {
         base.Awake();
-        RestoreSpeed();
     }
 
     private void Update() {
         Move();
 
-        if (Input.GetKey(KeyCode.Space) && canShoot) {
+        if (Input.GetKeyDown(KeyCode.Space) && canShoot) {
             Shoot();
         }
 
         if (Input.GetKey(KeyCode.LeftShift)) {
-            Burst();
+            Game.instance.SwitchToBurstSpeed();
+            anim.Play("burst");
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift)) {
-            RestoreSpeed();
+            Game.instance.SwitchToNormalSpeed();
+            anim.Play("burst_inv");
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            BarrelRoll(-1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            BarrelRoll(1);
+        }
+
     }
 
     #region Movement
     private void Move() {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
-        Vector3 dir = new Vector3(hor, ver, 1);
-        Vector3 finalDir = new Vector3(hor, ver, 1.0f);
-        Vector3 finalPos = transform.position + dir * currentSpeed * Time.deltaTime;
-        transform.position = new Vector3(Mathf.Clamp(finalPos.x,-8.5f,8.5f), Mathf.Clamp(finalPos.y, -7f, 14f), finalPos.z);
-        
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(finalDir), Mathf.Deg2Rad * 50.0f);
+        Vector3 dir = new Vector3(hor, ver, 0);
+        Vector3 rotDir = new Vector3(hor, ver, 1.0f);
+        transform.position += dir * shipSpeed * Time.deltaTime; ;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rotDir), Mathf.Deg2Rad * 50.0f); ;
+        //Vector3 pos = transform.position + dir * shipSpeed * Time.deltaTime;
+        //Vector3 finalPos = new Vector3(Mathf.Clamp(pos.x, -8.5f, 8.5f), Mathf.Clamp(pos.y, -7f, 14f), pos.z);
     }
     #endregion
+
+    //receives either -1 or 1 to asign orientation
+    private void BarrelRoll (int orientation) {
+        Quaternion zRot = transform.rotation;
+        zRot.eulerAngles = Vector3.forward* 90.0f * orientation;
+        transform.rotation = zRot;
+    }
 
     #region Shoot
     private void Shoot() {
         canShoot = false;
-        Bullet newBullet = Instantiate(bulletPrefab, shootingPoint.transform.position, transform.rotation).GetComponent<Bullet>();
+        Bullet newBullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation).GetComponent<Bullet>();
         newBullet.transform.parent = bulletHolder;
-        newBullet.transform.forward = shootingPoint.forward;
         newBullet.owner = gameObject;
         StartCoroutine(StartShootCD());
     }
@@ -59,18 +75,6 @@ public class Player : Ship {
     private IEnumerator StartShootCD() {
         yield return new WaitForSeconds(ShootCD);
         canShoot = true;
-    }
-    #endregion
-
-    #region Burst
-    private void Burst() {
-        currentSpeed = burstSpeed;
-        anim.Play("burst");
-    }
-
-    private void RestoreSpeed() {
-        currentSpeed = normalSpeed;
-        anim.Play("burst_inv");
     }
     #endregion
 

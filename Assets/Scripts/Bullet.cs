@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour {
     }
 
     void Update() {
-        rb.velocity = transform.forward * speed;
+        rb.AddForce(transform.forward*speed,ForceMode.VelocityChange);
     }
 
     private void OnTriggerEnter(Collider other)
