@@ -9,6 +9,8 @@ public class Game : MonoBehaviour {
     public float normalSpeed, burstSpeed;
     public float gameSpeed { get; set; }
 
+    private bool controllsEnabled = false;
+
     private void Awake() {
         if (instance == null)
             instance = this;

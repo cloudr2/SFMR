@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ScrollingTexture : MonoBehaviour {
 
-    public float scrollSpeed;
+    [Range(0,0.1f)]
+    public float scrollSpeedPercent;
     private Renderer mat;
 
     private void Awake() {
@@ -12,6 +13,6 @@ public class ScrollingTexture : MonoBehaviour {
     }
 
     private void Update() {
-        mat.material.mainTextureOffset += Vector2.down * Game.instance.gameSpeed / 100 * Time.deltaTime;   
+        mat.material.mainTextureOffset += Vector2.down * Game.instance.gameSpeed * Mathf.Pow(scrollSpeedPercent,2) * Time.deltaTime;   
     }
 }

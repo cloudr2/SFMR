@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
+    public bool isPlayerControlActive { get; set; }
 
     private void Awake() {
         if (instance == null)
@@ -13,5 +14,6 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+        isPlayerControlActive = false;
     }
 }

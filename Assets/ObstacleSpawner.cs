@@ -6,9 +6,9 @@ public class ObstacleSpawner : MonoBehaviour {
 
     public static ObstacleSpawner instance = null;
     public GameObject[] obstacles;
+    public Transform obstacleHolder;
     public float freq;
-    public float minDistance;
-    public float maxDistance;
+    public float distance;
     public float minXOffset;
     public float maxXOffset;
 
@@ -19,15 +19,20 @@ public class ObstacleSpawner : MonoBehaviour {
             Destroy(gameObject);
     }
 
-    private void Update() {
-        InvokeRepeating("SpawnObstacle", 10.0f, Random.Range(1.0f, freq));
+    private void Start() {
+        InvokeRepeating("SpawnObstacle", 5.0f, Random.Range(3.0F, freq));
     }
 
     public void SpawnObstacle() {
-        for (int i = 0; i < obstacles.Length - 1; i++) {
-            Vector3 spawnPosition = new Vector3(Random.Range(minXOffset,maxXOffset),transform.position.y,Random.Range(minDistance,maxDistance));
-            Instantiate(obstacles[i], spawnPosition, transform.rotation);
-        }
+        Vector3 spawnPosition = new Vector3(Random.Range(minXOffset,maxXOffset),transform.position.y,distance);
+        GameObject spawnObstacle = obstacles[Random.Range(0, obstacles.Length)];
+        GameObject go = Instantiate(spawnObstacle, spawnObstacle.transform.position + transform.position + spawnPosition, transform.rotation);
+        go.transform.parent = obstacleHolder;
+    }
+
+    private void OnDestroy()
+    {
+        CancelInvoke();
     }
 
 }

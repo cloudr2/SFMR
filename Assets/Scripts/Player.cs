@@ -17,30 +17,40 @@ public class Player : Ship {
     }
 
     private void Update() {
-        Move();
+        if (GameManager.instance.isPlayerControlActive)
+        {
+            Move();
+            GetKeys();
+        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space) && canShoot) {
+    private void GetKeys() {
+        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
+        {
             Shoot();
         }
 
-        if (Input.GetKey(KeyCode.LeftShift)) {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
             Game.instance.SwitchToBurstSpeed();
             anim.Play("burst");
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift)) {
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
             Game.instance.SwitchToNormalSpeed();
             anim.Play("burst_inv");
         }
 
-        if (Input.GetKey(KeyCode.E)) {
+        if (Input.GetKey(KeyCode.E))
+        {
             BarrelRoll(-1);
         }
 
-        if (Input.GetKey(KeyCode.Q)) {
+        if (Input.GetKey(KeyCode.Q))
+        {
             BarrelRoll(1);
         }
-
     }
 
     #region Movement
@@ -49,10 +59,11 @@ public class Player : Ship {
         float ver = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(hor, ver, 0);
         Vector3 rotDir = new Vector3(hor, ver, 1.0f);
-        transform.position += dir * shipSpeed * Time.deltaTime; ;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rotDir), Mathf.Deg2Rad * 50.0f); ;
-        //Vector3 pos = transform.position + dir * shipSpeed * Time.deltaTime;
-        //Vector3 finalPos = new Vector3(Mathf.Clamp(pos.x, -8.5f, 8.5f), Mathf.Clamp(pos.y, -7f, 14f), pos.z);
+        Vector3 pos = transform.position + dir * shipSpeed * Time.deltaTime;
+        Vector3 finalPos = new Vector3(Mathf.Clamp(pos.x, -8.5f, 8.5f), Mathf.Clamp(pos.y, 0.5f, 20f), pos.z);
+        Quaternion rot = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rotDir), Mathf.Deg2Rad * 50.0f);
+        transform.position = finalPos;
+        transform.rotation = rot;
     }
     #endregion
 
