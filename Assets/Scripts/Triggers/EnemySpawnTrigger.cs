@@ -8,7 +8,6 @@ public class EnemySpawnTrigger : MonoBehaviour {
         if (other.gameObject.tag == "Player") {
             CleanEnemiesAlive();
             SpawnManager.instance.SpawnAll();
-            print("spawned all");
         }
     }
 
@@ -18,7 +17,6 @@ public class EnemySpawnTrigger : MonoBehaviour {
             foreach (Enemy enemy in enemies) {
                 enemy.InvertMovement();
             }
-            print("enemies cleaned");
         }
     }
 }

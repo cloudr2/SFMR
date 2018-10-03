@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 20
+  flashTime: 1
 --- !u!114 &114951495761061650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -282,11 +283,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipSpeed: 0
   burstCD: 0
-  ShootCD: 0.5
+  ShootCD: 1
   shootingPoint: {fileID: 4122480076549462}
   bulletPrefab: {fileID: 1652322661627628, guid: 8e23dce64ef1ca749a5469111013d73d,
     type: 2}
   timeToDestination: 2
+  onRetire: 0
 --- !u!135 &135165911235495692
 SphereCollider:
   m_ObjectHideFlags: 1

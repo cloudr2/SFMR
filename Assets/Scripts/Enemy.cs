@@ -13,12 +13,14 @@ public class Enemy : Ship {
     private float startTime;
     private Player target;
     private bool onPlace = false;
+    public bool onRetire = false;
     private bool isMoveInverted = false;
 
 
-    private void Awake() {
+    protected override void Awake() {
         startTime = Time.time;
         target = FindObjectOfType<Player>();
+
         base.Awake();
     }
 
@@ -53,7 +55,9 @@ public class Enemy : Ship {
     }
 
     public void InvertMovement() {
+        transform.parent = ls.onDisableHolder;
         startTime = Time.time;
+        onRetire = true;
         isMoveInverted = true;
     }
 
