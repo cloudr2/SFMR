@@ -8,8 +8,7 @@ public class Game : MonoBehaviour {
 
     public float normalSpeed, burstSpeed;
     public float gameSpeed { get; set; }
-
-    private bool controllsEnabled = false;
+    public bool PlayerControlActive;
 
     private void Awake() {
         if (instance == null)

@@ -17,8 +17,7 @@ public class Player : Ship {
     }
 
     private void Update() {
-        if (GameManager.instance.isPlayerControlActive)
-        {
+        if (Game.instance.PlayerControlActive) {
             Move();
             GetKeys();
         }
@@ -26,31 +25,13 @@ public class Player : Ship {
 
     private void GetKeys() {
         if (Input.GetKeyDown(KeyCode.Space) && canShoot)
-        {
             Shoot();
-        }
 
         if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Game.instance.SwitchToBurstSpeed();
-            anim.Play("burst");
-        }
+            Boost();
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            Game.instance.SwitchToNormalSpeed();
-            anim.Play("burst_inv");
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            BarrelRoll(-1);
-        }
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            BarrelRoll(1);
-        }
+            StopBoost();
     }
 
     #region Movement
@@ -67,11 +48,6 @@ public class Player : Ship {
     }
     #endregion
 
-    //receives either -1 or 1 to asign orientation
-    private void BarrelRoll (int orientation) {
-        throw new System.NotImplementedException();
-    }
-
     #region Shoot
     private void Shoot() {
         canShoot = false;
@@ -86,6 +62,17 @@ public class Player : Ship {
         canShoot = true;
     }
     #endregion
+
+    public void Boost() {
+        Game.instance.SwitchToBurstSpeed();
+        anim.Play("burst");
+    }
+
+    public void StopBoost() {
+        Game.instance.SwitchToNormalSpeed();
+        anim.Play("burst_inv");
+    }
+   
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Ground") {
