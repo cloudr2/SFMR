@@ -19,12 +19,4 @@ public class Bullet : MonoBehaviour {
         rb.AddForce(transform.forward*speed,ForceMode.VelocityChange);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag != owner.tag)
-        {
-            other.transform.parent.SendMessage("ReceiveDamage",damage);
-        }
-    }
-
 }

@@ -6,15 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(LifeScript))]
 public abstract class Ship : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public Transform shootingPoint, bulletHolder;
     public float shipSpeed, burstCD, ShootCD;
+    public Transform shootingPoint;
+    public GameObject bulletPrefab;
 
     protected bool canShoot = true;
+    protected Transform bulletHolder;
     protected Animator anim;
+    protected LifeScript ls;
 
     protected virtual void Awake()
     {
+        bulletHolder = GameObject.Find("BulletHolder").transform;
         anim = GetComponent<Animator>();
+        ls = GetComponent<LifeScript>();
     }
+
+    public abstract void Shoot();
 }

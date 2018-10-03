@@ -14,13 +14,15 @@ public class LifeScript : MonoBehaviour{
 
     public void ReceiveDamage(float damage)
     {
+        FXManager.instance.DisplayImpactFX(transform.position);
         currentHP -= damage;
         if (currentHP <= 0)
             Death();
         else
             OnHit();
     }
-    private void Death()
+
+    public void Death()
     {
         gameObject.SetActive(false);
     }

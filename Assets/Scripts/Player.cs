@@ -49,7 +49,7 @@ public class Player : Ship {
     #endregion
 
     #region Shoot
-    private void Shoot() {
+    public override void Shoot() {
         canShoot = false;
         Bullet newBullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation).GetComponent<Bullet>();
         newBullet.transform.parent = bulletHolder;
@@ -77,6 +77,11 @@ public class Player : Ship {
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Ground") {
             splashPart.gameObject.SetActive(true);
+        }
+        if (other.gameObject.tag == "Wall") {
+            ls.ReceiveDamage(15);
+            //FXManager.instance.PlayAnimation("Damage");
+            //SFXManager.instance.PlayAnimation("Damage");
         }
     }
 

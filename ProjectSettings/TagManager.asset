@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Enemy
   - EnemySpawner
+  - Wall
   layers:
   - Default
   - TransparentFX
